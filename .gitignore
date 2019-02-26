@@ -2,6 +2,4 @@ bin
 obj
 .idea
 .vs
-certificate.pem
-private.key
-token.json
+certificates/
