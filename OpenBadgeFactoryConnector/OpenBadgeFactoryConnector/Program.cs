@@ -15,6 +15,8 @@ namespace OpenBadgeFactoryConnector
             
             // Load the certificate into an X509Certificate object.
             X509Certificate cert = new X509Certificate(Certificate);
+            X509CertificateCollection cert_collection = new X509CertificateCollection();
+            cert_collection.Add(cert);
             
             string resultsTrue = cert.ToString(true);
             Console.WriteLine(resultsTrue);
@@ -26,6 +28,8 @@ namespace OpenBadgeFactoryConnector
             HttpClientHandler handler = new HttpClientHandler();
             handler.UseDefaultCredentials = true;
 
+            // WebRequestHandler requestHandler = new WebRequestHandler(); // Only available on windows 
+            
             // Create an HttpClient object
             HttpClient client = new HttpClient(handler);
             
