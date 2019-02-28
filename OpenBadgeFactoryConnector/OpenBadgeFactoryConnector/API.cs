@@ -14,5 +14,6 @@ namespace OpenBadgeFactoryConnector
             this.certificate_file = certificate_file;
             this.key_file = key_file;
         }
+        
     }
 }
