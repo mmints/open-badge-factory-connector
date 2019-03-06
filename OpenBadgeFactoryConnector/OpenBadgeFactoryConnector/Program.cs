@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace OpenBadgeFactoryConnector
         {
             
             // The path to the certificate.
-            string Certificate = "C:\\Users\\Mark\\IWM\\git\\open-badge-factory-connector-cs\\OpenBadgeFactoryConnector\\OpenBadgeFactoryConnector\\certificates\\test.pfx";
+            string Certificate = "C:\\Users\\Mark\\IWM\\obf-certificates\\cert.pfx";
 
             
             string pwd= "";
@@ -58,6 +59,7 @@ namespace OpenBadgeFactoryConnector
             {
                 string responseBody = await client.GetStringAsync("https://openbadgefactory.com/v1/earnablebadge/NM70OHe7HCeO");
 
+                File.WriteAllText("C:\\Users\\Mark\\IWM\\test.json", responseBody);
                 Console.WriteLine(responseBody);
             }  
             catch(HttpRequestException e)
