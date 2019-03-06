@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 namespace OpenBadgeFactoryConnector
 {
     class Program
-    {        
-        static async Task Main()
+    {
+        public static async Task test_1()
         {
             
             // The path to the certificate.
@@ -57,7 +57,7 @@ namespace OpenBadgeFactoryConnector
             // Call asynchronous network methods in a try/catch block to handle exceptions
             try	
             {
-                string responseBody = await client.GetStringAsync("https://openbadgefactory.com/v1/earnablebadge/NM70OHe7HCeO");
+                string responseBody = await client.GetStringAsync("https://openbadgefactory.com/v1/badge/NM70OHe7HCeO");
 
                 File.WriteAllText("C:\\Users\\Mark\\IWM\\test.json", responseBody);
                 Console.WriteLine(responseBody);
@@ -72,7 +72,81 @@ namespace OpenBadgeFactoryConnector
             // Need to call dispose on the HttpClient and HttpClientHandler objects 
             // when done using them, so the app doesn't leak resources
             handler.Dispose();
-            client.Dispose();
+            client.Dispose();            
+        }
+
+        public static async Task test_2()
+        {
+            string Certificate = "C:\\Users\\Mark\\IWM\\obf-certificates\\cert.pfx";
+            X509Certificate2 cert = new X509Certificate2(Certificate, "odl4u");
+            API api = new API("https://openbadgefactory.com/v1", cert, "NM70OHe7HCeO");
+            
+            string response = await api.GetRequest("badge");
+            Console.WriteLine(response);
+
+        }
+        
+        public static async Task test_3()
+        {
+            Connector obf = new Connector("NM70OHe7HCeO");
+            await obf.GetAllBadges();
+        }
+        
+        public static void test_4()
+        {
+            X509Store store = new X509Store(StoreName.My, StoreLocation.LocalMachine);
+
+            try
+            {
+                store.Open(OpenFlags.ReadOnly);
+                X509Certificate2Collection certificates = store.Certificates;
+                foreach (X509Certificate2 cert in certificates)
+                {
+                    if (cert.SubjectName.Name == "CN=NM70OHe7HCeO")
+                    {
+                        Console.WriteLine(cert.GetExpirationDateString());
+                        Console.WriteLine(cert.Issuer);
+                        Console.WriteLine(cert.GetEffectiveDateString());
+                        Console.WriteLine(cert.GetNameInfo(X509NameType.SimpleName, true));
+                        Console.WriteLine(cert.HasPrivateKey);
+                        Console.WriteLine(cert.SubjectName.Name);
+                        Console.WriteLine("-----------------------------------");                        
+                    }
+                }
+            }
+            finally
+            {
+                store.Close();
+            }
+        }
+
+        public static void test_5()
+        {
+            CertificateHandler ch = new CertificateHandler();
+            try
+            {
+                X509Certificate2 cert = ch.GetCertificate2FromPersonalKeyStoreByClientId("NM70OHe7HCeO");
+                Console.WriteLine(cert.GetExpirationDateString());
+                Console.WriteLine(cert.Issuer);
+                Console.WriteLine(cert.GetEffectiveDateString());
+                Console.WriteLine(cert.GetNameInfo(X509NameType.SimpleName, true));
+                Console.WriteLine(cert.HasPrivateKey);
+                Console.WriteLine(cert.SubjectName.Name);
+                Console.WriteLine("-----------------------------------");                        
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+
+        static async Task Main()
+        {
+            Console.WriteLine("Hello");
+            //await test_3();
+            test_5();
         }
     }
 }
