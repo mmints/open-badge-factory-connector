@@ -20,6 +20,7 @@ namespace OpenBadgeFactoryConnector
 
         /// <summary>
         /// Constructor <c>API</c>
+        /// </summary>
         /// <param name="url">URL to the API</param>
         /// <param name="certificate">Client certificate for SSL/TSL communication with the web server</param>
         /// <param name="client_id">Client ID of the requester</param>
