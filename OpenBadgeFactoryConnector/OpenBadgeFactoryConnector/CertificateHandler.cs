@@ -5,7 +5,6 @@ namespace OpenBadgeFactoryConnector
 {
     public class CertificateHandler
     {
-
         public  X509Certificate2 GetCertificate2FromPersonalKeyStoreByClientId(string client_id)
         {
             X509Store store = new X509Store(StoreName.My, StoreLocation.LocalMachine);

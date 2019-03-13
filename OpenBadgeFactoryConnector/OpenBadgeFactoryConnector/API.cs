@@ -44,8 +44,7 @@ namespace OpenBadgeFactoryConnector
 
             try
             {
-                responseBody = await client.GetStringAsync(this.url + "/" + endpoint + "/" + this.client_id);
-                
+                responseBody = await client.GetStringAsync(this.url + "/" + endpoint + "/" + this.client_id);   
             }
             catch (HttpRequestException e)
             {
