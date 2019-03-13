@@ -5,31 +5,30 @@ using System.Threading.Tasks;
 
 namespace OpenBadgeFactoryConnector
 {
-    
     /// <summary>
-    /// Cass <c>API</c>
+    /// Class <c>API</c>
     /// Generic certificate based API class for communication with a RESTful Web-API.
     /// </summary>
-    public class API
+    public class Api
     {
-        private string url;
-        private string client_id;
+        private readonly string _url;
+        private readonly string _clientId;
 
-        private HttpClientHandler client_handler = new HttpClientHandler();
-        private HttpClient client;
+        private readonly HttpClientHandler _clientHandler = new HttpClientHandler();
+        private readonly HttpClient _client;
 
         /// <summary>
         /// Constructor <c>API</c>
         /// </summary>
         /// <param name="url">URL to the API</param>
         /// <param name="certificate">Client certificate for SSL/TSL communication with the web server</param>
-        /// <param name="client_id">Client ID of the requester</param>
-        public API(string url, X509Certificate2 certificate, string client_id)
+        /// <param name="clientId">Client ID of the requester</param>
+        public Api(string url, X509Certificate2 certificate, string clientId)
         {
-            this.url = url;
-            this.client_handler.ClientCertificates.Add(certificate);
-            this.client = new HttpClient(this.client_handler);
-            this.client_id = client_id;
+            _url = url;
+            _clientHandler.ClientCertificates.Add(certificate);
+            _client = new HttpClient(this._clientHandler);
+            _clientId = clientId;
         }
 
         /// <summary>
@@ -44,7 +43,7 @@ namespace OpenBadgeFactoryConnector
 
             try
             {
-                responseBody = await client.GetStringAsync(this.url + "/" + endpoint + "/" + this.client_id);   
+                responseBody = await _client.GetStringAsync(_url + "/" + endpoint + "/" + _clientId);   
             }
             catch (HttpRequestException e)
             {
@@ -55,8 +54,8 @@ namespace OpenBadgeFactoryConnector
 
             // Need to call dispose on the HttpClient and HttpClientHandler objects 
             // when done using them, so the app doesn't leak resources
-            client_handler.Dispose();
-            client.Dispose();
+            _clientHandler.Dispose();
+            _client.Dispose();
             return responseBody;
         }
     }
