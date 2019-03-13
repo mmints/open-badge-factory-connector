@@ -144,11 +144,18 @@ namespace OpenBadgeFactoryConnector
             }
         }
 
-       
-
+        public static async Task test_response_class()
+        {
+            Connector connector = new Connector("NM70OHe7HCeO");
+            Response res = await connector.GetAllBadges();
+            res.WriteResponseBodyToJson("response.json");
+            string[] response_lines = res.ReadAllLineResponseBodyJson("response.json");
+            Console.WriteLine(response_lines[1]);
+        }
+        
         static async Task Main()
         {
-            await test_2(); 
+            await test_response_class(); 
         }
     }
 }
