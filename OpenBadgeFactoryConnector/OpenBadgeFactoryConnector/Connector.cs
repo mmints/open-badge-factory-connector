@@ -11,7 +11,7 @@ namespace OpenBadgeFactoryConnector
     /// </summary>
     public class Connector
     {
-        private readonly API _api;
+        private readonly Api _api;
 
         /// <summary>
         /// Constructor <c>Connector</c>
@@ -20,7 +20,7 @@ namespace OpenBadgeFactoryConnector
         public Connector(string clientId)
         {
             X509Certificate2 certificate = new X509Certificate2("certificates/cert.pfx", "odl4u"); // Just for testing
-            this._api = new API("https://openbadgefactory.com/v1", certificate, clientId);
+            _api = new Api("https://openbadgefactory.com/v1", certificate, clientId);
         }
 
         /// <summary>
