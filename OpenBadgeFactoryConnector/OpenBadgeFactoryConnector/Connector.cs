@@ -27,10 +27,12 @@ namespace OpenBadgeFactoryConnector
         /// This function returns all accessible badges.
         /// </summary>
         /// <returns>response bode (json) which includes all badges.</returns>
-        public async Task<string> GetAllBadges()
+        public async Task<Response> GetAllBadges()
         {
-            var responseBody = await this._api.GetRequest("badge");
-            return responseBody;
+            var responseBody = await _api.GetRequest("badge");
+            Response response = new Response(responseBody);
+            return response;
+            
         }
     }
 }
