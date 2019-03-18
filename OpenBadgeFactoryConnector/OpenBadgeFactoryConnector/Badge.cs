@@ -29,5 +29,5 @@ public class Badge
         ms.Close();
 
         return badge;
-    }
+    }   
 }

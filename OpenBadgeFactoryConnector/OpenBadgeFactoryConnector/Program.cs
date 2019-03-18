@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Net.Http;
+using System.Net.Mime;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using System.Runtime.Serialization.Json;
@@ -146,22 +148,55 @@ namespace OpenBadgeFactoryConnector
             }
         }
 
-        public static async Task test_response_class()
+        public static async Task test_badge_deserialization()
+        {            
+            Connector connector = new Connector("NM70OHe7HCeO");
+            var response = await connector.GetAllBadges();
+            // Console.WriteLine(response[0]);
+            
+            var badge = Badge.CreatFromJson(response[19]);
+            string name = badge.image;
+            Console.WriteLine(name);
+        }
+
+        public static async Task test_create_img()
         {
             Connector connector = new Connector("NM70OHe7HCeO");
-            Response res = await connector.GetAllBadges();
-            res.WriteResponseBodyToJson("response.json");
-            string[] response_lines = res.ReadAllLineResponseBodyJson("response.json");
-            Console.WriteLine(response_lines[0]);
-            Console.WriteLine("\n" + "###################################################################" + "\n" + "###################################################################" +"\n" + "###################################################################");
-            string temp = response_lines[0].Replace("\\n", "\n");
-            Console.WriteLine(temp);
+            var response = await connector.GetAllBadges();
+            
+            var badge = Badge.CreatFromJson(response[10]);
+            string image = badge.image;
+            Console.WriteLine(image);
+            var replace = image.Replace("data:image/png;base64,", "");
+            var data = Convert.FromBase64String(replace);
+            
+            var imageFile = new FileStream("img/" + badge.name+".png", FileMode.Create);
+            imageFile.Write(data, 0, data.Length);
+            imageFile.Flush();
+        }
+
+        public static async Task test_get_all_badge_imgs()
+        {
+            Connector connector = new Connector("NM70OHe7HCeO");
+            var responseBody = await connector.GetAllBadges();
+
+            foreach (var response in responseBody)
+            {
+                var badge = Badge.CreatFromJson(response);
+                var image = badge.image;
+                var replace = image.Replace("data:image/png;base64,", "");
+                var data = Convert.FromBase64String(replace);
+                var imageFile = new FileStream("img/" + badge.name+".png", FileMode.Create);
+                imageFile.Write(data, 0, data.Length);
+                imageFile.Flush();
+            }
+            
         }
         
 
         static async Task Main()
         {
-            await test_response_class(); 
+            await test_get_all_badge_imgs(); 
         }
 
     }
