@@ -3,6 +3,8 @@ using System.IO;
 using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using System.Runtime.Serialization.Json;
+using System.Text;
 
 namespace OpenBadgeFactoryConnector
 {
@@ -151,7 +153,12 @@ namespace OpenBadgeFactoryConnector
             res.WriteResponseBodyToJson("response.json");
             string[] response_lines = res.ReadAllLineResponseBodyJson("response.json");
             Console.WriteLine(response_lines[1]);
+            Console.WriteLine("\n" + "###################################################################" + "\n" + "###################################################################" +"\n" + "###################################################################");
+            string temp = response_lines[1];
+            Console.WriteLine(temp);
         }
+        
+        
         
         static async Task Main()
         {
