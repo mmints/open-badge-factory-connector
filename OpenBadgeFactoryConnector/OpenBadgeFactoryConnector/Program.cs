@@ -152,17 +152,17 @@ namespace OpenBadgeFactoryConnector
             Response res = await connector.GetAllBadges();
             res.WriteResponseBodyToJson("response.json");
             string[] response_lines = res.ReadAllLineResponseBodyJson("response.json");
-            Console.WriteLine(response_lines[1]);
+            Console.WriteLine(response_lines[0]);
             Console.WriteLine("\n" + "###################################################################" + "\n" + "###################################################################" +"\n" + "###################################################################");
-            string temp = response_lines[1];
+            string temp = response_lines[0].Replace("\\n", "\n");
             Console.WriteLine(temp);
         }
         
-        
-        
+
         static async Task Main()
         {
             await test_response_class(); 
         }
+
     }
 }
