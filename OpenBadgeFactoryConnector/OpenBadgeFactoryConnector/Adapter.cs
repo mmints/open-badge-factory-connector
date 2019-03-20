@@ -9,7 +9,7 @@ namespace OpenBadgeFactoryConnector
     /// Class <c>API</c>
     /// Generic certificate based API class for communication with a RESTful Web-API.
     /// </summary>
-    public class Api
+    public class Adapter
     {
         private readonly string _url;
         private readonly string _clientId;
@@ -23,7 +23,7 @@ namespace OpenBadgeFactoryConnector
         /// <param name="url">URL to the API</param>
         /// <param name="certificate">Client certificate for SSL/TSL communication with the web server</param>
         /// <param name="clientId">Client ID of the requester</param>
-        public Api(string url, X509Certificate2 certificate, string clientId)
+        public Adapter(string url, X509Certificate2 certificate, string clientId)
         {
             _url = url;
             _clientHandler.ClientCertificates.Add(certificate);
