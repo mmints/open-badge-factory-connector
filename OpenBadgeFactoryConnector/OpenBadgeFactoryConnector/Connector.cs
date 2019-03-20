@@ -22,7 +22,8 @@ namespace OpenBadgeFactoryConnector
         /// <param name="clientId">Client ID of the requester</param>
         public Connector(string clientId)
         {
-            X509Certificate2 certificate = new X509Certificate2("certificates/cert.pfx", "odl4u"); // Just for testing
+            // X509Certificate2 certificate = new X509Certificate2("certificates/cert.pfx", "odl4u"); // Just for testing
+            X509Certificate2 certificate = CertificateHandler.GetCertificate2FromPersonalKeyStoreByClientId(clientId);
             _adapter = new Adapter("https://openbadgefactory.com/v1", certificate, clientId);
         }
 
